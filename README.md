@@ -1,5 +1,7 @@
 # Pizza
 
+This project has been designed and created as a work experience project, by C Ross July 2025
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.0.
 
 ## Development server
