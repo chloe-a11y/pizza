@@ -127,9 +127,9 @@
       </div>
       <h2>Hello, {{ title() }}</h2>
 
+      
 
-
-      @if (isSelected == false) {
+      @if (!isSelected && !isSubmitted) {
         @for (pizza of pizzas; track pizza.name) {
           <div (click)="selectPizza(pizza)" class="pizza">
             <div class="img-wrapper">
@@ -140,16 +140,43 @@
             <p>{{pizza.price | currency: 'GBP'}}</p>
           </div>
         }
-      } @else {
+      } @else if (isSelected && !isSubmitted) {
         <div>
           <div class="order-details">
             Order: {{selectedPizza?.name}}
           </div>
-           <button (click)="cancelSelection()">cancel</button>
+           <button matButton (click)="cancelSelection()">cancel</button>
+           <form [formGroup]="pizzaOrder" (ngSubmit)="handleSubmit()">
+            <label for="pizzaSize">Select pizza size</label>
+            <select type="text" formControlName="pizzaSize" >
+              <option value="0">small</option>
+              <option value="2">medium - +£2</option>
+              <option value="3">large - +£3</option>
+            </select> <br>
+            <label for="stuffedCrust">Stuffed crust? - +£1</label>
+            <input type="checkbox" formControlName="stuffedCrust" /> <br>
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" /> <br>
+            <label for="email">Email</label>
+            <input type="email" formControlName="email" /> <br>
+            <label for="phone">Phone</label>
+            <input type="text" formControlName="phone" /> <br>
+            <label for="address">Address</label>
+            <input type="textarea" formControlName="address" /> <br>
+            <button type="submit" [disabled]="!pizzaOrder.valid">Submit</button>
+            
+          </form>
         </div>
+      } @else {
+        <p>Thank you for your order</p>
+        <p>Your total is: {{calcCost() | currency: 'GBP'}}</p>
+        <p>It will arrive in 20-40 minutes</p>
+        <button matButton (click)="finished()">finished</button>
+        
       }
     </div>
 </main>
+
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->

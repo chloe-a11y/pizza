@@ -1,3 +1,27 @@
+button {
+    background: rgb(228, 184, 228);
+    border-radius: 12px;
+    padding: 5px;
+}
+
+
+div {
+  height: 150px;
+  width: 35%;
+  font-size: 1.25rem;
+}
+
+
+p.small {
+  line-height: 1.2;
+   font-size: 1.25rem;
+}
+
+label {
+  line-height: 3;
+  font-size: 1.25rem;
+}
+
 .pizza {
     padding: 16px 0;
     border-bottom: 1px solid grey;
@@ -27,6 +51,7 @@
         z-index: 1;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         font-size: 140px;
+        
     }
 }
 

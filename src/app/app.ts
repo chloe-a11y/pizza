@@ -1,5 +1,6 @@
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 export interface Pizza {
@@ -11,7 +12,7 @@ export interface Pizza {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CurrencyPipe, NgOptimizedImage],
+  imports: [RouterOutlet, CurrencyPipe, NgOptimizedImage, ReactiveFormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -20,8 +21,22 @@ export class App {
   protected readonly title = signal('please select from the following pizzas');
 
   public isSelected: boolean = false;
+  public isSubmitted: boolean = false;
   public selectedPizza: Pizza | null = null;
 
+  public pizzaOrder = new FormGroup({
+    pizzaSize: new FormControl(0, Validators.required),
+    stuffedCrust: new FormControl(false),
+    address: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    phone: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.email),
+
+  })
+  public handleSubmit(){
+    this.isSubmitted = true;
+    window.alert("tardar");
+  }
   public selectPizza(pizza: Pizza) {
     console.log(`i used to have ${pizza.name} dreams until i found out there were other ways to score`);
     this.selectedPizza = pizza;
@@ -31,6 +46,20 @@ export class App {
   public cancelSelection(){
     this.selectedPizza = null;
     this.isSelected = false;
+  }
+
+  public finished(){
+    this.selectedPizza = null;
+    this.isSelected = false;
+    this.isSubmitted = false;
+    this.pizzaOrder.reset();
+  }
+
+  public calcCost(): number {
+    const base: number = this.selectedPizza?.price ?? 0;
+    const size: number = this.pizzaOrder?.value?.pizzaSize ?? 0;
+    const crust: number = this.pizzaOrder.value.stuffedCrust ? 1 : 0;
+    return (base + size + crust);
   }
 
   pizzas = [
