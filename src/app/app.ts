@@ -29,6 +29,11 @@ export class App {
 
   }
 
+  public cancelSelection(){
+    this.selectedPizza = null;
+    this.isSelected = false;
+  }
+
   pizzas = [
     {
       name: 'Mozzarella',
