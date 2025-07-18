@@ -62,6 +62,11 @@ export class App {
     return (base + size + crust);
   }
 
+  public cancelSelection(){
+    this.selectedPizza = null;
+    this.isSelected = false;
+  }
+
   pizzas = [
     {
       name: 'Mozzarella',
